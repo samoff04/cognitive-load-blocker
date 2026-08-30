@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { font-family: system-ui, sans-serif; padding: 24px; max-width: 800px; margin: auto; }
+  table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .bar { height: 14px; background: #e11d48; border-radius: 3px; }
+  .bar-label { width: 90px; font-size: 12px; }
+</style>
+</head>
+<body>
+  <h2>Blocking Activity</h2>
+  <div id="chart"></div>
+  <h3>Recent Blocks</h3>
+  <table>
+    <thead><tr><th>Time</th><th>Type</th><th>Site</th><th>Reason</th></tr></thead>
+    <tbody id="log"></tbody>
+  </table>
+  <script src="dashboard.js"></script>
+</body>
+</html>

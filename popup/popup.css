@@ -1,4 +1,4 @@
 body { width: 260px; padding: 12px; font-family: system-ui, sans-serif; }
 h3 { margin: 0 0 8px; }
 #todayStats { font-size: 13px; line-height: 1.6; }
-button { margin-top: 10px; width: 100%; padding: 8px; cursor: pointer; }
+button { margin-top: 8px; width: 100%; padding: 8px; cursor: pointer; }

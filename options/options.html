@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { font-family: system-ui, sans-serif; padding: 20px; max-width: 420px; }
+  label { display: block; margin-top: 12px; font-size: 13px; }
+  input[type="range"] { width: 100%; }
+  #thresholdValue { font-weight: bold; }
+  button { margin-top: 16px; padding: 8px 14px; cursor: pointer; }
+  ul { font-size: 13px; padding-left: 18px; }
+</style>
+</head>
+<body>
+  <h2>Settings</h2>
+
+  <label>Block threshold: <span id="thresholdValue"></span></label>
+  <input type="range" id="threshold" min="2" max="10" step="1" />
+
+  <h3>Allowlisted sites</h3>
+  <ul id="allowlistItems"></ul>
+
+  <button id="save">Save</button>
+  <div id="status"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>

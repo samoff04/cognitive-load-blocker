@@ -1,7 +1,4 @@
-const fs = require("fs");
-const path = require("path");
-const code = fs.readFileSync(path.join(__dirname, "../lib/heuristics.js"), "utf8");
-eval(code);
+const CLBHeuristics = require("../lib/heuristics.js");
 
 function makeElement({ position = "static", zIndex = "0", width = 100, height = 100, text = "" } = {}) {
   const el = document.createElement("div");

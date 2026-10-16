@@ -16,6 +16,8 @@ npm test
 
 ## Files
 
+## Files
+
 ```
 cognitive-load-blocker/
 ├── manifest.json
@@ -26,9 +28,11 @@ cognitive-load-blocker/
 ├── popup/
 ├── options/
 ├── dashboard/
+├── icons/
 ├── tests/
 ├── .github/workflows/test.yml
 ├── package.json
+├── package-lock.json
 ├── .gitignore
 ├── README.md
 └── LICENSE

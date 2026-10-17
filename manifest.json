@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Cognitive Load Blocker",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Blocks ads/trackers and detects dark patterns with a transparent block log.",
   "permissions": [
     "declarativeNetRequest",

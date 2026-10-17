@@ -1,9 +1,10 @@
 {
   "name": "cognitive-load-blocker",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Chrome extension that blocks ads/trackers and detects dark patterns.",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build:rules": "node scripts/build-rules.js"
   },
   "devDependencies": {
     "jest": "^29.0.0",

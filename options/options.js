@@ -1,12 +1,15 @@
 const slider = document.getElementById("threshold");
 const valueLabel = document.getElementById("thresholdValue");
+const previewBox = document.getElementById("preview");
 const listEl = document.getElementById("allowlistItems");
 const statusEl = document.getElementById("status");
 
 async function load() {
-  const { threshold = 4, allowlist = [] } = await chrome.storage.local.get(["threshold", "allowlist"]);
+  const { threshold = 4, allowlist = [], previewMode = false } =
+    await chrome.storage.local.get(["threshold", "allowlist", "previewMode"]);
   slider.value = threshold;
   valueLabel.textContent = threshold;
+  previewBox.checked = previewMode;
 
   listEl.innerHTML = "";
   allowlist.forEach((site) => {
@@ -29,7 +32,10 @@ slider.addEventListener("input", () => {
 });
 
 document.getElementById("save").addEventListener("click", async () => {
-  await chrome.storage.local.set({ threshold: parseInt(slider.value, 10) });
+  await chrome.storage.local.set({
+    threshold: parseInt(slider.value, 10),
+    previewMode: previewBox.checked
+  });
   statusEl.textContent = "Saved.";
   setTimeout(() => (statusEl.textContent = ""), 1500);
 });

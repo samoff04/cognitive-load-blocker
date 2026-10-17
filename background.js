@@ -1,10 +1,14 @@
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.type === "LOG_BLOCK") {
-    addStat(msg.entry, sender.tab?.id);
-  }
+let queue = Promise.resolve();
+
+chrome.runtime.onMessage.addListener((msg) => {
+  if (msg.type === "LOG_BLOCK") enqueue(msg.entry);
 });
 
-async function addStat(entry, tabId) {
+function enqueue(entry) {
+  queue = queue.then(() => addStat(entry)).catch(() => {});
+}
+
+async function addStat(entry) {
   const today = new Date().toISOString().slice(0, 10);
   const { stats = {} } = await chrome.storage.local.get("stats");
 
@@ -29,9 +33,32 @@ function updateBadge(day) {
   chrome.action.setBadgeBackgroundColor({ color });
 }
 
+async function syncAllowlistRules(allowlist) {
+  const existing = await chrome.declarativeNetRequest.getDynamicRules();
+  const removeRuleIds = existing.map((rule) => rule.id);
+  const addRules = allowlist.filter(Boolean).map((host, i) => ({
+    id: i + 1,
+    priority: 100,
+    action: { type: "allowAllRequests" },
+    condition: { requestDomains: [host], resourceTypes: ["main_frame", "sub_frame"] }
+  }));
+  await chrome.declarativeNetRequest.updateDynamicRules({ removeRuleIds, addRules });
+}
+
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area === "local" && changes.allowlist) {
+    syncAllowlistRules(changes.allowlist.newValue || []);
+  }
+});
+
+chrome.runtime.onInstalled.addListener(async () => {
+  const { allowlist = [] } = await chrome.storage.local.get("allowlist");
+  syncAllowlistRules(allowlist);
+});
+
 if (chrome.declarativeNetRequest.onRuleMatchedDebug) {
   chrome.declarativeNetRequest.onRuleMatchedDebug.addListener((info) => {
-    addStat({
+    enqueue({
       type: "network",
       reasons: [`Blocked by rule #${info.rule.ruleId}`],
       selector: info.request.url,

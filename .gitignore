@@ -7,3 +7,4 @@ node_modules/
 dist/
 *.zip
 .chrome-extension-key.pem
+_metadata/

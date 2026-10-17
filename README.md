@@ -9,6 +9,10 @@ git clone https://github.com/samoff04/cognitive-load-blocker.git
 cd cognitive-load-blocker
 ```
 
+Then open `chrome://extensions`, turn on Developer mode, click Load unpacked and select the folder.
+
+## Tests
+
 ```bash
 npm install
 npm test
@@ -23,11 +27,15 @@ cognitive-load-blocker/
 ├── content.js
 ├── lib/heuristics.js
 ├── rules/ad_rules.json
+├── scripts/build-rules.js
 ├── popup/
 ├── options/
 ├── dashboard/
 ├── icons/
 ├── tests/
+│   ├── heuristics.test.js
+│   ├── build-rules.test.js
+│   └── manual/test-page.html
 ├── .github/workflows/test.yml
 ├── package.json
 ├── package-lock.json
@@ -36,15 +44,9 @@ cognitive-load-blocker/
 └── LICENSE
 ```
 
-## Stuff that's not done yet
-
-- The domain list is small (~10 entries) just to prove the concept works — it's not trying to compete with EasyList
-- The default threshold is still a guess, I haven't tuned it against a bunch of real sites yet so expect some false positives on weird layouts
-- Tests only cover the scoring logic, not the content script or the popup
-
 ## License
 
-This project is licensed under the MIT License.
+The code is MIT. The generated rule list is derived from EasyList (CC BY-SA 3.0 / GPLv3).
 
 ## Author
 

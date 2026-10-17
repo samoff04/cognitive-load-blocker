@@ -2,15 +2,40 @@
   const seen = new WeakSet();
   let allowlist = [];
   let threshold = CLBHeuristics.BLOCK_THRESHOLD;
+  let previewMode = false;
 
   async function loadSettings() {
-    const { allowlist: al = [], threshold: t } = await chrome.storage.local.get(["allowlist", "threshold"]);
-    allowlist = al;
-    threshold = t || CLBHeuristics.BLOCK_THRESHOLD;
+    const stored = await chrome.storage.local.get(["allowlist", "threshold", "previewMode"]);
+    allowlist = stored.allowlist || [];
+    threshold = stored.threshold || CLBHeuristics.BLOCK_THRESHOLD;
+    previewMode = Boolean(stored.previewMode);
   }
 
   function isAllowed() {
     return allowlist.includes(location.hostname);
+  }
+
+  function describe(el) {
+    const cls = typeof el.className === "string" ? el.className.trim() : "";
+    return el.tagName + (cls ? "." + cls.split(/\s+/).join(".") : "");
+  }
+
+  function flagElement(el, score, reasons) {
+    if (previewMode) {
+      el.style.setProperty("outline", "3px dashed #e11d48", "important");
+      el.title = `Cognitive Load Blocker (preview): ${reasons.join(", ")} [score ${score}]`;
+      return;
+    }
+
+    el.style.setProperty("display", "none", "important");
+    logBlock({
+      type: "dark_pattern",
+      score,
+      reasons,
+      selector: describe(el),
+      url: location.hostname,
+      time: Date.now()
+    });
   }
 
   function handleElement(el) {
@@ -20,18 +45,7 @@
     if (isAllowed()) return;
 
     const { score, reasons } = CLBHeuristics.scoreElement(el);
-
-    if (score >= threshold) {
-      el.style.setProperty("display", "none", "important");
-      logBlock({
-        type: "dark_pattern",
-        score,
-        reasons,
-        selector: el.tagName + (el.className ? "." + String(el.className).split(" ").join(".") : ""),
-        url: location.hostname,
-        time: Date.now()
-      });
-    }
+    if (score >= threshold) flagElement(el, score, reasons);
   }
 
   function scanTree(root) {
@@ -59,5 +73,6 @@
   chrome.storage.onChanged.addListener((changes) => {
     if (changes.allowlist) allowlist = changes.allowlist.newValue || [];
     if (changes.threshold) threshold = changes.threshold.newValue || CLBHeuristics.BLOCK_THRESHOLD;
+    if (changes.previewMode) previewMode = Boolean(changes.previewMode.newValue);
   });
 })();

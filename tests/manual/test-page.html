@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Cognitive Load Blocker test page</title>
+</head>
+<body style="font-family: system-ui, sans-serif; height: 2000px; padding: 24px;">
+  <h1>Test page</h1>
+  <p>Case 1 should disappear (red dashed outline in preview mode). Cases 2 and 3 should stay visible.</p>
+
+  <div style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:9999; background:black; color:white;">
+    <p>Case 1: Hurry! Only 2 left, offer ends in 00:02:15</p>
+    <button style="opacity:0; width:5px; height:5px;">close</button>
+  </div>
+
+  <div style="position:fixed; bottom:0; left:0; right:0; z-index:9999; background:#eee; padding:12px;">
+    Case 2: We use cookies to improve your experience. <button>Accept</button>
+  </div>
+
+  <div style="position:fixed; bottom:70px; right:12px; z-index:9999; width:220px; background:#dfe; padding:12px;">
+    Case 3: a normal popup with a visible close button <button style="width:28px; height:28px;">x</button>
+  </div>
+</body>
+</html>

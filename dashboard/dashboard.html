@@ -3,16 +3,25 @@
 <head>
 <style>
   body { font-family: system-ui, sans-serif; padding: 24px; max-width: 800px; margin: auto; }
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  #clearStats { padding: 6px 12px; cursor: pointer; }
+  #total { font-size: 13px; color: #555; margin-top: 4px; }
   table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 13px; }
   th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; }
   .bar-row { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
   .bar { height: 14px; background: #e11d48; border-radius: 3px; }
   .bar-label { width: 90px; font-size: 12px; }
+  #empty { margin-top: 16px; color: #777; font-size: 13px; }
 </style>
 </head>
 <body>
-  <h2>Blocking Activity</h2>
+  <div class="top">
+    <h2>Blocking Activity</h2>
+    <button id="clearStats">Clear stats</button>
+  </div>
+  <div id="total"></div>
   <div id="chart"></div>
+  <div id="empty"></div>
   <h3>Recent Blocks</h3>
   <table>
     <thead><tr><th>Time</th><th>Type</th><th>Site</th><th>Reason</th></tr></thead>

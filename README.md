@@ -16,8 +16,6 @@ npm test
 
 ## Files
 
-## Files
-
 ```
 cognitive-load-blocker/
 ├── manifest.json
@@ -42,7 +40,6 @@ cognitive-load-blocker/
 
 - The domain list is small (~10 entries) just to prove the concept works — it's not trying to compete with EasyList
 - The default threshold is still a guess, I haven't tuned it against a bunch of real sites yet so expect some false positives on weird layouts
-- Stats are stored forever in `chrome.storage.local`, there's no clear/reset button yet
 - Tests only cover the scoring logic, not the content script or the popup
 
 ## License

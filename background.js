@@ -13,13 +13,20 @@ async function addStat(entry, tabId) {
   stats[today].log.push(entry);
   if (stats[today].log.length > 200) stats[today].log.shift();
 
+  const days = Object.keys(stats).sort();
+  while (days.length > 30) {
+    delete stats[days.shift()];
+  }
+
   await chrome.storage.local.set({ stats });
-  updateBadge(stats[today].dark_pattern + stats[today].network);
+  updateBadge(stats[today]);
 }
 
-function updateBadge(count) {
-  chrome.action.setBadgeText({ text: count > 0 ? String(count) : "" });
-  chrome.action.setBadgeBackgroundColor({ color: "#e11d48" });
+function updateBadge(day) {
+  const total = day.dark_pattern + day.network;
+  const color = day.network >= day.dark_pattern ? "#e11d48" : "#f97316";
+  chrome.action.setBadgeText({ text: total > 0 ? String(total) : "" });
+  chrome.action.setBadgeBackgroundColor({ color });
 }
 
 if (chrome.declarativeNetRequest.onRuleMatchedDebug) {
